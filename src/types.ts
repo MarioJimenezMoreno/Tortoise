@@ -1,6 +1,7 @@
 import { LinearScale } from "chart.js";
 
 export interface Task {
+  id: string;
   title: string;
   description: string;
   beginning_hour: string;

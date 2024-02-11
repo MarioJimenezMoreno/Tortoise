@@ -4,9 +4,8 @@ import Calendar from "./Agenda/Calendar";
 import DaysContainer from "./Agenda/DaysContainer";
 import TaskCreator from "./Agenda/TaskCreator";
 import { Task } from "../types";
-import axios from "axios";
-import DaysContainerLoader from "./Agenda/DaysContainerLoader";
 import { format } from "date-fns";
+import DaysContainerLoader from "./Agenda/DaysContainerLoader";
 import { Button, useDisclosure } from "@nextui-org/react";
 import EditIcon from "./Icons/EditIcon";
 import DaysContainerEmpty from "./Agenda/DaysContainerEmpty";
@@ -19,23 +18,12 @@ const Agenda = () => {
 
   const fetchTasks = () => {
     setIsLoading(true);
-    axios
-      .get(
-        `http://localhost:8080/api/session-dates?date=${format(
-          selectedDate,
-          "yyyy-MM-dd"
-        )}&email=${localStorage.email}`
-      )
-      .then((response) => {
-        console.log(response.data);
-        setTasks(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching tasks:", error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+    const filteredTasks = tasks.filter(
+      (task: Task) => task.date === format(selectedDate, "eeee, dd/MM/yy")
+    );
+    setTasks(filteredTasks);
+    setIsLoading(false);
   };
 
   useEffect(() => {

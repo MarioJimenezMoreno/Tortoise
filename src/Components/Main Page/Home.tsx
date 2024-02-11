@@ -15,7 +15,7 @@ function Home() {
           <h3 className="text-3xl font-bold">Boost your productivity</h3>
           <div className="p-4">
             <Button color="primary" onClick={handleClick}>
-              Try Now!
+              Go to App
             </Button>
           </div>
         </div>

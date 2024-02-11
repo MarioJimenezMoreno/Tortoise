@@ -1,6 +1,5 @@
 import { Navbar, NavbarBrand } from "@nextui-org/react";
 import { useLocation } from "react-router-dom";
-import MainPageRoutes from "./Header/MainPageRoutes";
 import MainPageButtons from "./Header/MainPageButtons";
 import AppRoutes from "./Header/AppRoutes";
 import AppButtons from "./Header/AppButtons";
@@ -13,7 +12,7 @@ const Header = () => {
       <NavbarBrand>
         <p className="font-bold text-inherit">Tortoise</p>
       </NavbarBrand>
-      {location.pathname === "/" ? <MainPageRoutes /> : <AppRoutes />}
+      {location.pathname !== "/" ? <AppRoutes /> : null}
       {location.pathname === "/" ? <MainPageButtons /> : <AppButtons />}
     </Navbar>
   );

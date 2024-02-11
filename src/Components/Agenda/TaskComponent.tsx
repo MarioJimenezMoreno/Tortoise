@@ -3,7 +3,7 @@ import { Task } from "../../types";
 import { differenceInMinutes, parse } from "date-fns";
 import { Button, Card, CardBody, Divider } from "@nextui-org/react";
 import DeleteIcon from "../Icons/DeleteIcon";
-import axios from "axios";
+import EditIcon from "../Icons/EditIcon";
 
 const containerHeight = 1200;
 
@@ -20,17 +20,20 @@ const calculatePositionAndSize = (task: Task) => {
   return { top, height };
 };
 
-const handleDeleteTask = (task: Task) => {
-  axios
-    .delete(
-      `http://localhost:8080/api/tasks?beginning_hour=${task.beginning_hour}`
-    )
-    .then((response) => {
-      console.log("Tarea borrada:", response.data);
-    })
-    .catch((error) => {
-      console.error("Error al crear la borrar:", error);
-    });
+const handleDeleteTask = (taskToDelete: Task) => {
+  const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+  const updatedTasks = tasks.filter(
+    (task: Task) => task.id !== taskToDelete.id
+  );
+  localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+  console.log("Tarea borrada:", taskToDelete.title);
+};
+
+const handleEditTask = (TaskToEdit: Task) => {
+  const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+  const updatedTasks = tasks.filter((task: Task) => task.id !== TaskToEdit.id);
+  localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+  console.log("Tarea editada:", TaskToEdit.title);
 };
 
 const TaskComponent: React.FC<{
@@ -59,23 +62,36 @@ const TaskComponent: React.FC<{
   return (
     <Card fullWidth style={style} className={task.color_code}>
       <div className="flex flex-grow">
-        <CardBody className="flex flex-row gap-2 p-2">
-          <div className="flex flex-col text-xs justify-between">
-            <p>{task.beginning_hour}</p>
-            <p>{task.final_hour}</p>
+        <CardBody className="flex flex-row justify-between p-3">
+          <div className="flex gap-5">
+            <div className="flex flex-col text-xs justify-between">
+              <p>{task.beginning_hour}</p>
+              <p>{task.final_hour}</p>
+            </div>
+            <Divider className="h-auto" orientation="vertical" />
+            <p className="font-bold">{task.title}:</p>
+            {task.description}
           </div>
-          <Divider className="h-auto" orientation="vertical" />
-          <p className="font-bold">{task.title}:</p>
-          {task.description}
-
-          <Button
-            isIconOnly
-            radius="full"
-            variant="light"
-            onClick={() => handleDeleteTask(task)}
-          >
-            <DeleteIcon />
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              isIconOnly
+              radius="full"
+              variant="faded"
+              color="warning"
+              onClick={() => handleEditTask(task)}
+            >
+              <EditIcon />
+            </Button>
+            <Button
+              isIconOnly
+              radius="full"
+              variant="faded"
+              color="danger"
+              onClick={() => handleDeleteTask(task)}
+            >
+              <DeleteIcon />
+            </Button>
+          </div>
         </CardBody>
       </div>
     </Card>

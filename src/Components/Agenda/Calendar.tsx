@@ -52,16 +52,16 @@ function Calendar({ selectedDate, setSelectedDate }: CalendarProps) {
     dayItems.push(
       <Button
         key={`button-${days[i].toString()}`}
-        className={`flex-grow m-2 text-2xl${
+        className={`flex-grow m-2 text-2xl ${
           isSameDay(days[i], selectedDate) ? "bg-primary-300" : ""
         }`}
+        onClick={() => handleDateClick(days[i])}
       >
         <div
           key={days[i].toString()}
           className={`day ${
             isSameWeek(days[i], startOfWeekDate) ? "" : "outside"
           }`}
-          onClick={() => handleDateClick(days[i])}
         >
           <span className="date">{format(days[i], "d")}</span>
         </div>
@@ -75,12 +75,16 @@ function Calendar({ selectedDate, setSelectedDate }: CalendarProps) {
         <CardHeader className=" flex flex-col gap-2">
           <p className="calendarTitle">{format(selectedDate, "MMM yyyy")}</p>
           <Divider></Divider>
-          <button onClick={handlePrevWeek}>^</button>
         </CardHeader>
+        <Button color="primary" variant="bordered" onClick={handlePrevWeek}>
+          ^
+        </Button>
         <CardBody className="py-0">
           <div className="days flex-grow">{dayItems}</div>
         </CardBody>
-        <button onClick={handleNextWeek}>v</button>
+        <Button color="primary" variant="faded" onClick={handleNextWeek}>
+          v
+        </Button>
       </Card>
     </>
   );

@@ -1,7 +1,6 @@
 // import "../Styles/MainPage.css";
 import Header from "./Header";
 import Home from "./Main Page/Home";
-import Info from "./Main Page/Info";
 
 function MainPage() {
   return (
@@ -9,8 +8,6 @@ function MainPage() {
       <Header />
       <div id="home" />
       <Home />
-      <div id="info" />
-      <Info />
     </>
   );
 }

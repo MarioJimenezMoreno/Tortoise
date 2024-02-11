@@ -1,7 +1,6 @@
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-// import TimeKeeper from "react-timekeeper";
 import {
   //@ts-ignore
   Avatar,
@@ -17,10 +16,7 @@ import {
 } from "@nextui-org/react";
 import { TaskCreatorProps } from "../../types";
 import { format } from "date-fns";
-import axios from "axios";
 import { differenceInMinutes, parse } from "date-fns";
-// import { TimePicker } from "antd";
-// import dayjs from "dayjs";
 //@ts-ignore
 import { TimePicker } from "react-ios-time-picker";
 
@@ -40,28 +36,18 @@ const TaskCreator = ({
 
   const [isFormValid, setIsFormValid] = useState(false);
 
-  // const [showStartTime, setShowStartTime] = useState(false);
-  // const [showEndTime, setShowEndTime] = useState(false);
-
-  // const [values, setValues] = useState<[dayjs.Dayjs, dayjs.Dayjs]>([
-  //   dayjs("07:00", "HH:mm"),
-  //   dayjs("09:00", "HH:mm"),
-  // ]);
-
-  // const hourFormat = "HH:mm";
-
   const handleColorCode = () => {
     switch (category) {
-      case "Work":
+      case "Estudio":
         setColorCode("bg-success-300");
         break;
-      case "Entertainment":
+      case "Juego":
         setColorCode("bg-warning-300");
         break;
-      case "Cook":
+      case "Vídeo":
         setColorCode("bg-danger-300");
         break;
-      case "Sports":
+      case "Deporte":
         setColorCode("bg-primary-300");
         break;
     }
@@ -73,16 +59,15 @@ const TaskCreator = ({
     const endTime = parse(finalHour, "HH:mm", new Date());
     const totalMinutes = differenceInMinutes(endTime, startTime);
 
-    console.log(colorCode);
-
     const newTask = {
+      id: crypto.randomUUID() as string,
       title: taskTitle,
       description: taskDescription,
       beginning_hour: beginningHour,
       final_hour: finalHour,
       duration: totalMinutes,
       category: category,
-      date: format(date, "yyyy-MM-dd"),
+      date: format(date, "eeee, dd/MM/yy"),
       color_code: colorCode == "" ? "bg-primary-300" : colorCode,
       userList: [
         {
@@ -94,17 +79,13 @@ const TaskCreator = ({
         },
       ],
     };
-    console.log(newTask);
-    axios
-      .post(`http://localhost:8080/api/tasks`, newTask)
-      .then((response) => {
-        console.log("Tarea creada:", response.data);
-        onSuccess();
-      })
-      .catch((error) => {
-        console.error("Error al crear la tarea:", error);
-        onSuccess();
-      });
+
+    const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+    tasks.push(newTask);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+
+    console.log("Tarea guardada en localStorage:", newTask);
+    onSuccess();
   };
 
   const handleInputChange = () => {
@@ -121,13 +102,6 @@ const TaskCreator = ({
     }
     console.log(beginningHour + " " + finalHour);
   };
-
-  // const handleHourSetUp = () => {
-  //   console.log("entramoh");
-  //   setBeginningHour(values[0][0]);
-  //   setFinalHour(values[1]);
-  //   console.log(finalHour + " " + beginningHour);
-  // };
 
   return (
     <>
@@ -178,8 +152,8 @@ const TaskCreator = ({
                   }}
                 >
                   <SelectItem
-                    key="Work"
-                    value="Work"
+                    key="Estudio"
+                    value="Estudio"
                     startContent={
                       <Avatar
                         className="bg-success-300 w-6 h-6 text-tiny"
@@ -187,14 +161,14 @@ const TaskCreator = ({
                       />
                     }
                     onClick={() => {
-                      setCategory("Work");
+                      setCategory("Estudio");
                     }}
                   >
-                    Work
+                    Estudio
                   </SelectItem>
                   <SelectItem
-                    key="Sports"
-                    value="Sports"
+                    key="Deporte"
+                    value="Deporte"
                     startContent={
                       <Avatar
                         className="bg-primary-300 w-6 h-6 text-tiny"
@@ -202,14 +176,14 @@ const TaskCreator = ({
                       />
                     }
                     onClick={() => {
-                      setCategory("Sports");
+                      setCategory("Deporte");
                     }}
                   >
-                    Sports
+                    Deporte
                   </SelectItem>
                   <SelectItem
-                    key="Entertainment"
-                    value="Entertainment"
+                    key="Juego"
+                    value="Juego"
                     startContent={
                       <Avatar
                         className="bg-warning-300 w-6 h-6 text-tiny"
@@ -217,14 +191,14 @@ const TaskCreator = ({
                       />
                     }
                     onClick={() => {
-                      setCategory("Entertainment");
+                      setCategory("Juego");
                     }}
                   >
-                    Entertainment
+                    Juego
                   </SelectItem>
                   <SelectItem
-                    key="Cook"
-                    value="Cook"
+                    key="Vídeo"
+                    value="Vídeo"
                     startContent={
                       <Avatar
                         className="bg-danger-300 w-6 h-6 text-tiny"
@@ -232,10 +206,10 @@ const TaskCreator = ({
                       />
                     }
                     onClick={() => {
-                      setCategory("Cook");
+                      setCategory("Vídeo");
                     }}
                   >
-                    Cook
+                    Vídeo
                   </SelectItem>
                 </Select>
                 <div className="flex flex-col">
@@ -254,14 +228,6 @@ const TaskCreator = ({
                     }}
                     value={finalHour}
                   />
-                  {/* <TimePicker.RangePicker
-                    format={hourFormat}
-                    minuteStep={15}
-                    onOpenChange={() => {
-                      handleHourSetUp;
-                    }}
-                    value={[values[0], values[1]]}
-                  /> */}
                 </div>
                 <p className="text-xs px-2 pb-1 font-bold">Date</p>
                 <div className="px-3">

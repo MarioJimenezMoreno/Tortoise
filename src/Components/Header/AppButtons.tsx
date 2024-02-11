@@ -36,9 +36,6 @@ const AppRoutes = () => {
               </p>
             </DropdownItem>
             {/* @ts-ignore */}
-            <DropdownItem as={Link} to="/profile">
-              Profile
-            </DropdownItem>
             <DropdownItem key="system">My membership</DropdownItem>
             <DropdownItem key="settings">Settings</DropdownItem>
             <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>

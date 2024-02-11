@@ -80,7 +80,7 @@ const Categories: FC = () => {
         className="flex-grow p-4 font-bold text-xl text-center bg-danger-300"
         id="categoria_0"
       >
-        {"Entertainment"}
+        {"Juego"}
         <br />
         {"50"} h
       </Card>
@@ -88,7 +88,7 @@ const Categories: FC = () => {
         className="flex-grow p-4 ml-4 font-bold text-xl text-center bg-warning-300"
         id="categoria_1"
       >
-        {"Work"}
+        {"Estudio"}
         <br />
         {"40"} h
       </Card>
@@ -96,7 +96,7 @@ const Categories: FC = () => {
         className="flex-grow p-4 ml-4 font-bold text-xl text-center bg-success-300"
         id="categoria_2"
       >
-        {"Cook"}
+        {"Vídeo"}
         <br />
         {resultado_2[2].duration} h
       </Card>

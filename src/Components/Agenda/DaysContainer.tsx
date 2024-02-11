@@ -49,7 +49,7 @@ const DaysContainer: React.FC<DaysContainerProps> = ({
   return (
     <div className="dayContainer sticky gap-2">
       <div className="dateTitle flex justify-between">
-        <p>{format(selectedDate, "eeee, dd/MM/yyyy")}</p>
+        <p>{format(selectedDate, "eeee, dd/MM/yy")}</p>
         <Switch
           defaultSelected
           onChange={handlePositionChange}

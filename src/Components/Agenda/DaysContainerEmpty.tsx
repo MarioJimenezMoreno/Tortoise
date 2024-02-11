@@ -8,7 +8,7 @@ const DaysContainerEmpty: React.FC<SecondaryDaysContainerProps> = ({
   return (
     <div className="dayContainer sticky gap-2">
       <div className="dateTitle flex justify-between">
-        <p>{format(selectedDate, "eeee, dd/MM/yyyy")}</p>
+        <p>{format(selectedDate, "eeee, dd/MM/yy")}</p>
       </div>
       <div className="loaderContainer">
         <p>No tasks planned yet for this date.</p>
