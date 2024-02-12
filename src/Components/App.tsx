@@ -5,7 +5,6 @@ import "../Styles/App.css";
 import "../Styles/Style.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { NextUIProvider } from "@nextui-org/react";
-import Estadisticas from "./Analytics";
 
 function App() {
   return (
@@ -14,7 +13,6 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/app" element={<Agenda />} />
-          <Route path="/stats" element={<Estadisticas />} />
         </Routes>
       </NextUIProvider>
     </BrowserRouter>

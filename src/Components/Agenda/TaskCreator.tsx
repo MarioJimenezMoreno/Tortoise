@@ -1,5 +1,7 @@
 import { useState } from "react";
-import DatePicker from "react-datepicker";
+import "react-datetime-picker/dist/DateTimePicker.css";
+import "react-calendar/dist/Calendar.css";
+import "react-clock/dist/Clock.css";
 import "react-datepicker/dist/react-datepicker.css";
 import {
   //@ts-ignore
@@ -17,8 +19,6 @@ import {
 import { TaskCreatorProps } from "../../types";
 import { format } from "date-fns";
 import { differenceInMinutes, parse } from "date-fns";
-//@ts-ignore
-import { TimePicker } from "react-ios-time-picker";
 
 const TaskCreator = ({
   selectedDate,
@@ -29,9 +29,10 @@ const TaskCreator = ({
   const [taskTitle, setTaskTitle] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const [category, setCategory] = useState("");
+  const [time, setTime] = useState<Date>(new Date());
   const [beginningHour, setBeginningHour] = useState("00:00");
   const [finalHour, setFinalHour] = useState("01:00");
-  const [date, setDate] = useState(selectedDate);
+  const [date] = useState(selectedDate);
   const [colorCode, setColorCode] = useState("");
 
   const [isFormValid, setIsFormValid] = useState(false);
@@ -214,7 +215,7 @@ const TaskCreator = ({
                 </Select>
                 <div className="flex flex-col">
                   <p className="text-xs px-2 pb-1 font-bold">Hour Range</p>
-                  <TimePicker
+                  {/* <TimePicker
                     onChange={(e: string) => {
                       setBeginningHour(e);
                       handleInputChange();
@@ -227,16 +228,16 @@ const TaskCreator = ({
                       handleInputChange();
                     }}
                     value={finalHour}
-                  />
+                  /> */}
                 </div>
-                <p className="text-xs px-2 pb-1 font-bold">Date</p>
+                {/* <p className="text-xs px-2 pb-1 font-bold">Date</p>
                 <div className="px-3">
                   <DatePicker
                     selected={date}
                     onChange={(date) => setDate(date || new Date())}
                     dateFormat="dd/MM/yyyy"
                   />
-                </div>
+                </div> */}
               </ModalBody>
               <ModalFooter>
                 <Button

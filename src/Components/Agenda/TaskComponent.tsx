@@ -74,9 +74,10 @@ const TaskComponent: React.FC<{
           </div>
           <div className="flex gap-2">
             <Button
+              className=""
               isIconOnly
-              radius="full"
-              variant="faded"
+              radius="md"
+              variant="bordered"
               color="warning"
               onClick={() => handleEditTask(task)}
             >
@@ -84,8 +85,8 @@ const TaskComponent: React.FC<{
             </Button>
             <Button
               isIconOnly
-              radius="full"
-              variant="faded"
+              radius="md"
+              variant="ghost"
               color="danger"
               onClick={() => handleDeleteTask(task)}
             >
